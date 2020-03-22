@@ -1,0 +1,329 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pong;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+
+public class FrmPong extends javax.swing.JFrame implements KeyListener {
+
+    int pelotaX = 290 , pelotaY = 200;
+    int signo=1;
+    int signo2=1;
+    int paletai=150; //150
+    int medidax,mediday,mediday2,medidax1,mediday1;
+    int paletad=150; //150
+    int velocidad=20;
+    int puntaje1;
+    int puntaje2;
+    int velocidadpelota;
+    
+ 
+    //Deben estar estos 3 metodos siempre presentes
+    public void keyTyped(KeyEvent e) {} //tecla de función son las f
+    public void keyReleased(KeyEvent e) {} //Cuando soltamos la tecla
+    public void keyPressed(KeyEvent e) //Presionamos la tecla
+    {
+       if (e.getKeyCode()==87)
+       {
+           paletai-=velocidad;
+       }
+       else if (e.getKeyCode()==83)
+       {
+           paletai+=velocidad;
+       }
+       
+       if (e.getKeyCode()==38)
+       {
+           paletad-=velocidad;
+       }
+       else if (e.getKeyCode()==40)
+       {
+           paletad += velocidad;
+       }
+       System.out.println(e.getKeyCode());
+       
+    }
+
+    
+    public FrmPong() {
+        initComponents();
+        btnReiniciar.addKeyListener(this);
+        btnSalir.addKeyListener(this);
+        btnJugar.addKeyListener(this);
+        lblJugador1.addKeyListener(this);
+        lblJugador2.addKeyListener(this);
+        cbxVelocidad.addKeyListener(this);
+        addKeyListener(this);
+        this.setLocationRelativeTo(null);
+    }
+        
+    public void paint (Graphics g)
+    {
+        super.paint(g);
+        g.drawRect(0,0,600,400);
+        g.setColor(Color.WHITE);
+        //g.fillOval(pelotaX, pelotaY, 20, 20);
+        g.fillOval(pelotaX, pelotaY, 20, 20);
+        repaint();
+        g.setColor(Color.YELLOW);
+        g.fillRect(0, paletai, 20, 60);
+        g.fillRect(580,paletad,20,60);
+        g.setColor(Color.BLACK);
+        g.drawRect(0,paletai,20, 60);
+        g.drawRect(580,paletad,20, 60);
+        
+    }
+    
+    Timer temporizador = new Timer (10, new ActionListener ()
+    {
+        
+            public void actionPerformed(ActionEvent e)
+            {
+                
+                pelotaX+=signo*velocidadpelota;
+                pelotaY+=signo2*velocidadpelota;
+                
+                if(paletai <= 20)
+                {
+                    paletai=20;
+                }
+                else if (paletai >= 340)
+                {
+                    paletai=340;
+                }
+                
+                //Paletas no superan los limites
+                
+                if(paletad <= 20)
+                {
+                    paletad = 20;
+                }
+                else if (paletad >= 340)
+                {
+                    paletad = 340;
+                }
+
+                if (pelotaY <=22 || pelotaY >=380)
+                {
+                    signo2*=-1;
+//                    
+                }
+                
+                //Golpe con las pelotas
+                //paletai y d = 150
+                
+                mediday=paletai+70;
+                mediday1=paletai-2;
+                if (pelotaX == 20 && pelotaY >= (paletai-15) && pelotaY <= mediday)
+                {
+                    signo*=-1;
+                }
+                
+                
+                mediday2=paletad+70;
+                medidax1=paletad-2; //la misma que medida mediday1
+                if (pelotaX == 560 && pelotaY >= (paletad-10) && pelotaY <= mediday2)
+                {
+                    signo*=-1;
+                }
+                
+                //Cuando la pelota sale de la pantalla
+                
+                if (pelotaX >= 600 || pelotaX <= -20)
+                {
+                    pelotaX=290;
+                    pelotaY=200;
+                    signo*=-1;
+                    signo2*=1;
+                }   
+                
+                if (pelotaX == 590 || pelotaX ==591 )
+                    {
+                        puntaje1=puntaje1+1;
+                        lblJugador1.setText(String.valueOf(puntaje1));
+                    }
+                if (pelotaX <= -18 )
+                    {
+                        puntaje2=puntaje2+1;
+                        lblJugador2.setText(String.valueOf(puntaje2));
+                    }
+                
+                
+               
+            }
+    });
+    
+    
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblJugador1 = new javax.swing.JLabel();
+        lblJugador2 = new javax.swing.JLabel();
+        btnReiniciar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        cbxVelocidad = new javax.swing.JComboBox<>();
+        btnJugar = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(600, 450));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+        getContentPane().setLayout(null);
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(10, 11, 0, 354);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pong/mesap.jpg"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(10, 0, 592, 360);
+
+        jLabel3.setText("Puntaje: ");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(40, 340, 60, 30);
+
+        lblJugador1.setText("0");
+        getContentPane().add(lblJugador1);
+        lblJugador1.setBounds(110, 340, 30, 30);
+
+        lblJugador2.setText("0");
+        getContentPane().add(lblJugador2);
+        lblJugador2.setBounds(150, 340, 30, 30);
+
+        btnReiniciar.setText("Reiniciar");
+        btnReiniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReiniciarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnReiniciar);
+        btnReiniciar.setBounds(370, 370, 100, 40);
+
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSalir);
+        btnSalir.setBounds(480, 370, 90, 40);
+
+        jLabel4.setText("Velocidad de juego:");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(20, 370, 130, 40);
+
+        cbxVelocidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2", "3" }));
+        getContentPane().add(cbxVelocidad);
+        cbxVelocidad.setBounds(140, 380, 40, 20);
+
+        btnJugar.setText("Jugar");
+        btnJugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnJugarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnJugar);
+        btnJugar.setBounds(250, 370, 100, 40);
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        String nl = System.getProperty("line.separator");
+        JOptionPane.showMessageDialog(null, "Bienvenido al juego de Pong! "
+              + nl + "Gana el jugador que más puntaje obtenga. "
+              + nl + "Puedes seleccionar la velocidad de juego"
+              + nl + "Buena suerte! ");
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        System.exit(0);
+        
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
+        temporizador.stop();
+        puntaje1=0;
+        puntaje2=0;
+        lblJugador1.setText(String.valueOf(puntaje1));
+        lblJugador2.setText(String.valueOf(puntaje2));
+        
+        pelotaX=290;
+        pelotaY=200;
+    }//GEN-LAST:event_btnReiniciarActionPerformed
+
+    private void btnJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugarActionPerformed
+        temporizador.start();
+        velocidadpelota=Integer.parseInt(cbxVelocidad.getSelectedItem().toString());
+    }//GEN-LAST:event_btnJugarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FrmPong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrmPong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrmPong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmPong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FrmPong().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnJugar;
+    private javax.swing.JButton btnReiniciar;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cbxVelocidad;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblJugador1;
+    private javax.swing.JLabel lblJugador2;
+    // End of variables declaration//GEN-END:variables
+}
